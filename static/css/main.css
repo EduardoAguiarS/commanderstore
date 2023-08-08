@@ -64,9 +64,11 @@ ul {
 
 button {
   cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
 
 input, textarea {
+  font-family: 'Roboto', sans-serif;
   outline: none;
   border: none;
 }

@@ -14,7 +14,7 @@
         <nav class="menu">
             <div class="menu__container">
                 <div class="menu__logo">
-                    <a href={{url_for('index')}}><img src="{{url_for('static', filename='img/logo.png')}}" alt="Logo Commander Store"></a>
+                    <a href={{url_for('index')}}><img src="{{url_for('static', filename='img/logo.png')}}" alt="Commander Store"></a>
                 </div>
                 <ul class="menu__list">
                     <li class="menu__list-item"><a class="menu__list-link" href={{url_for('index')}}>Home</a></li>
@@ -26,5 +26,15 @@
             </div>
         </nav>
     </header>
+    <main>
+        <section class="container">
+            <h3>Usuarios Cadastrados</h3>
+            {% for usuario in usuarios %}
+                <p>
+                    <strong>{{ usuario.nome }}</strong>
+                </p>
+            {% endfor %}
+        </section>
+    </main>
 </body>
 </html>
