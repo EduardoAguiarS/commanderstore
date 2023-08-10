@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander Store - {{ title }}</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+</head>
+<body>
+  <header>
+    <nav class="menu">
+        <div class="menu__container">
+            <div class="menu__logo">
+                <a href={{url_for('index')}}><img src="{{url_for('static', filename='img/logo.png')}}" alt="Commander Store"></a>
+            </div>
+            <ul class="menu__list">
+                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('index')}}>Home</a></li>
+                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('anuncios')}}>Anuncios</a></li>
+                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signup')}}>Cadastro</a></li>
+                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signin')}}>Login</a></li>
+                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('favoritos')}}>Favoritos</a></li>
+            </ul>
+        </div>
+      </nav>
+  </header>
+  <h4 class="title">{{ title }}</h4>
+  <form action="/categorias/novo" method="post" class="form">
+    <label for="name">Nome</label>
+    <input class="form__input" type="text" name="name" placeholder="Nome" id="name">
+
+    <label for="desc">Descrição</label>
+    <input class="form__input" type="desc" name="desc" placeholder="Descrição" id="desc">
+
+    <input class="form__submit" type="submit" value="Cadastrar">
+  </form>
+
+  <div class="container">
+    <h4 class="title">Categorias Cadastradas</h4>
+    <ul>
+      {% for categoria in categorias %}
+        <li>{{ categoria.nome }} - {{ categoria.desc }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
