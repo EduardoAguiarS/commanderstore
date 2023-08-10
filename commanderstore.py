@@ -88,6 +88,35 @@ def criarusuario():
     return redirect(url_for('signin'))
 
 
+# User details
+@app.route('/usuario/detalhes/<int:id>')
+def buscarusuario(id):
+    usuario = Usuario.query.get(id)
+    return usuario.nome
+
+
+# Edit user
+@app.route('/usuario/editar/<int:id>', methods=['GET', 'POST'])
+def editarusuario(id):
+    usuario = Usuario.query.get(id)
+    if request.method == 'POST':
+        usuario.nome = request.form.get('name')
+        usuario.email = request.form.get('email')
+        usuario.senha = request.form.get('password')
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('editarusuario.html', usuario=usuario, title='Editar')
+
+
+# Delete user
+@app.route('/usuario/deletar/<int:id>')
+def deletarusuario(id):
+    usuario = Usuario.query.get(id)
+    db.session.delete(usuario)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
 # Sign in page
 @app.route('/signin')
 def signin():

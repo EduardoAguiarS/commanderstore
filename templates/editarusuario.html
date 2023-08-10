@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang=ptbr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+    <title>Commander Store - {{ title }}</title>
+</head>
+<body>
+    <h4 class="title">{{ title }}</h4>
+    <form action="/usuario/editar/{{ usuario.id }}" method="post" class="form">
+        <label for="name">Nome Completo</label>
+        <input class="form__input" type="text" name="name" placeholder="Nome" id="name" value="{{ usuario.nome }}">
+
+        <label for="email">E-mail</label>
+        <input class="form__input" type="email" name="email" placeholder="E-mail" id="email" value="{{ usuario.email }}">
+
+        <label for="password">Senha</label>
+        <input class="form__input" type="password" name="password" placeholder="Senha" id="password" value="{{ usuario.senha }}">
+
+        <label for="password_confirmation">Confirme a senha</label>
+        <input class="form__input" type="password" name="password_confirmation" placeholder="Confirme a senha" id="password_confirmation">
+
+        <input class="form__submit" type="submit" value="Alterar Dados">
+    </form>
+
+    <nav>
+        <ul class="nav">
+            <li class="nav__item"><a class="nav__button" href="{{url_for('index')}}">Voltar</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
