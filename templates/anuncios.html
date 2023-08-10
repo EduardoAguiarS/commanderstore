@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Commander Store - {{ title }}</title>
   <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
 </head>
 <body>
   <header>
@@ -14,15 +15,62 @@
                 <a href={{url_for('index')}}><img src="{{url_for('static', filename='img/logo.png')}}" alt="Commander Store"></a>
             </div>
             <ul class="menu__list">
-                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('index')}}>Home</a></li>
-                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('anuncios')}}>Anuncios</a></li>
-                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signup')}}>Cadastro</a></li>
-                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signin')}}>Login</a></li>
-                <li class="menu__list-item"><a class="menu__list-link" href={{url_for('favoritos')}}>Favoritos</a></li>
-            </ul>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('index')}}>Home</a></li>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('anuncios')}}>Anuncios</a></li>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signup')}}>Cadastro</a></li>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signin')}}>Login</a></li>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('favoritos')}}>Favoritos</a></li>
+              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('categorias')}}>Categorias</a></li>
+          </ul>
         </div>
       </nav>
   </header>
   <h4 class="title">{{ title }}</h4>
+  <form action="/anuncios/novo" method="post" class="form">
+    <label for="name">Nome</label>
+    <input class="form__input" type="text" name="name" placeholder="Nome" id="name">
+
+    <label for="desc">Descrição</label>
+    <input class="form__input" type="text" name="desc" placeholder="Descrição" id="desc">
+
+    <label for="preco">Preço</label>
+    <input class="form__input" type="text" name="preco" placeholder="Preço" id="preco">
+
+    <label for="cat">Categorias</label>
+    <select name="cat" id="cat">
+      {% for categoria in categorias %} 
+        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="usr">Usuario</label>
+    <input class="form__input" type="text" name="usr" placeholder="Usuario" id="usr">
+
+    <input class="form__submit" type="submit" value="Cadastrar">
+  </form>
+
+  <h4 class="title">Lista de Produtos</h4>
+  <table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Desc</th>
+            <th>Qtd</th>
+            <th>Preco</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for anuncio in anuncios %}
+        <tr>
+            <td>{{ anuncio.nome }}</td>
+            <td>{{ anuncio.desc }}</td>
+            <td>{{ anuncio.qtd }}</td>
+            <td>{{ anuncio.preco }}</td>
+            <td>{{ anuncio.cat_id }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </body>
 </html>

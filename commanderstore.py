@@ -130,8 +130,8 @@ def anuncios_novo():
         request.form.get('name'),
         request.form.get('desc'),
         request.form.get('preco'),
-        request.form.get('cat_id'),
-        request.form.get('usr_id')
+        request.form.get('cat'),
+        request.form.get('usr')
     )
     db.session.add(anuncio)
     db.session.commit()
