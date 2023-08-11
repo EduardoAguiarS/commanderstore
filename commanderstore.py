@@ -56,6 +56,13 @@ class Anuncio(db.Model):
         self.usr_id = usr_id
 
 
+# Error handlers
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    return render_template('notfound.html'), 404
+
+
 # Link to css
 @app.route('/static/css/<path:path>')
 def send_css(path):
@@ -76,7 +83,7 @@ def signup():
 
 
 # New user
-@app.route('/usuario/novo', methods=['POST'])
+@app.route('/usuario/criar', methods=['POST'])
 def criarusuario():
     usuario = Usuario(
         request.form.get('name'),
@@ -130,7 +137,7 @@ def categorias():
 
 
 # New category
-@app.route('/categorias/novo', methods=['POST'])
+@app.route('/categorias/criar', methods=['POST'])
 def categorias_novo():
     categoria = Categoria(
         request.form.get('name'),
@@ -153,7 +160,7 @@ def anuncios():
 
 
 # New product
-@app.route('/anuncios/novo', methods=['POST'])
+@app.route('/anuncios/criar', methods=['POST'])
 def anuncios_novo():
     anuncio = Anuncio(
         request.form.get('name'),

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+  <title>Commander Store - Pagina não encontrada!</title>
+</head>
+<body>
+  <h4 class="title">Ops. Pagina não encontrada!</h4>
+  <p>{{ error }}</p>
+  <nav>
+    <ul class="nav">
+      <li class="nav__item"><a class="nav__button" href="{{url_for('index')}}">Voltar</a></li>
+    </ul>
+  </nav>
+</body>
+</html>
