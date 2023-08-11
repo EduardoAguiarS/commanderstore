@@ -66,6 +66,9 @@
             <td>{{ anuncio.desc }}</td>
             <td>{{ anuncio.preco }}</td>
             <td>{{ anuncio.cat_id }}</td>
+            <td><a href="{{ url_for('anuncio_detalhes', id=anuncio.id) }}">Ver</a></td>
+            <td><a href="{{ url_for('editaranuncio', id=anuncio.id) }}">Editar</a></td>
+            <td><a href="{{ url_for('deletaranuncio', id=anuncio.id) }}">Deletar</a></td>
         </tr>
       {% endfor %}
     </tbody>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander Store - {{ title }}</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+</head>
+<body>
+  <h4 class="title">{{ title }}</h4>
+  <form action="/anuncios/editar/{{ anuncio.id }}" method="post" class="form">
+    <label for="name">Nome</label>
+    <input class="form__input" type="text" name="name" placeholder="Nome" id="name" value="{{ anuncio.nome }}">
+
+    <label for="desc">Descrição</label>
+    <input class="form__input" type="text" name="desc" placeholder="Descrição" id="desc" value="{{ anuncio.desc }}">
+
+    <label for="preco">Preço</label>
+    <input class="form__input" type="text" name="preco" placeholder="Preço" id="preco" value="{{ anuncio.preco }}">
+
+    <label for="cat">Categorias</label>
+    <select name="cat" id="cat">
+      {% for categoria in categorias %} 
+        {% if categoria.id == anuncio.cat_id %}
+          <option value="{{ categoria.id }}" selected>{{ categoria.nome }}</option>
+        {% else %}
+          <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+
+    <input class="form__submit" type="submit" value="Alterar">
+  </form>
+
+  <p>{{ anuncio.cat_id }}</p>
+
+  <nav>
+    <ul class="nav">
+        <li class="nav__item"><a class="nav__button" href="{{url_for('anuncios')}}">Voltar</a></li>
+    </ul>
+  </nav>
+</body>
+</html>

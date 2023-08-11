@@ -195,6 +195,36 @@ def anuncios_novo():
     return redirect(url_for('anuncios'))
 
 
+# Ver produto
+@app.route('/anuncios/detalhes/<int:id>')
+def anuncio_detalhes(id):
+    anuncio = Anuncio.query.get(id)
+    return anuncio.nome
+
+
+# Edit product
+@app.route('/anuncios/editar/<int:id>', methods=['GET', 'POST'])
+def editaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    if request.method == 'POST':
+        anuncio.nome = request.form.get('name')
+        anuncio.desc = request.form.get('desc')
+        anuncio.preco = request.form.get('preco')
+        anuncio.cat_id = request.form.get('cat')
+        db.session.commit()
+        return redirect(url_for('anuncios'))
+    return render_template('editaranuncio.html', anuncio=anuncio, categorias=Categoria.query.all(), title=anuncio.nome)
+
+
+# Delete product
+@app.route('/anuncios/deletar/<int:id>')
+def deletaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    db.session.delete(anuncio)
+    db.session.commit()
+    return redirect(url_for('anuncios'))
+
+
 @app.route('/produtos/<id>')
 def produto(id):
     return render_template('produto.html', id=id, title='Produto')
