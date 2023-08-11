@@ -40,7 +40,11 @@
     <h4 class="title">Categorias Cadastradas</h4>
     <ul>
       {% for categoria in categorias %}
-        <li>{{ categoria.nome }} - {{ categoria.desc }}</li>
+        <li>
+          {{ categoria.nome }} - {{ categoria.desc }}
+          <a href="{{ url_for('editarcategoria', id=categoria.id) }}">Editar</a>
+          <a href="{{ url_for('deletarcategoria', id=categoria.id) }}">Excluir</a>
+        </li>
       {% endfor %}
     </ul>
   </div>

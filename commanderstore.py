@@ -148,6 +148,27 @@ def categorias_novo():
     return redirect(url_for('categorias'))
 
 
+# Edit category
+@app.route('/categorias/editar/<int:id>', methods=['GET', 'POST'])
+def editarcategoria(id):
+    categoria = Categoria.query.get(id)
+    if request.method == 'POST':
+        categoria.nome = request.form.get('name')
+        categoria.desc = request.form.get('desc')
+        db.session.commit()
+        return redirect(url_for('categorias'))
+    return render_template('editarcategoria.html', categoria=categoria, title='Editar')
+
+
+# Delete category
+@app.route('/categorias/deletar/<int:id>')
+def deletarcategoria(id):
+    categoria = Categoria.query.get(id)
+    db.session.delete(categoria)
+    db.session.commit()
+    return redirect(url_for('categorias'))
+
+
 # Products page
 @app.route('/anuncios')
 def anuncios():
