@@ -1,5 +1,10 @@
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import (current_user, LoginManager,
+                         login_user, logout_user,
+                         login_required)
+import hashlib
+
 
 # Configurations
 app = Flask(__name__)
@@ -11,13 +16,20 @@ db = SQLAlchemy(app)
 app.app_context().push()
 
 
+# Login manager
+app.secret_key = 'secret_key'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'signin'
+
+
 # Database models
 class Usuario(db.Model):
     __tablename__ = "usuario"
     id = db.Column('usr_id', db.Integer, primary_key=True)
     nome = db.Column('usr_nome', db.String(250))
     email = db.Column('usr_email', db.String(250))
-    senha = db.Column('usr_senha', db.String(20))
+    senha = db.Column('usr_senha', db.String(250))
 
     def __init__(self, nome, email, senha):
         self.nome = nome
@@ -26,6 +38,18 @@ class Usuario(db.Model):
 
     def __repr__(self):
         return f'Usuario {self.nome}'
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
 
 
 class Categoria(db.Model):
@@ -72,6 +96,7 @@ def send_css(path):
 # Routes
 # Home page
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html', usuarios=Usuario.query.all())
 
@@ -85,10 +110,12 @@ def signup():
 # New user
 @app.route('/usuario/criar', methods=['POST'])
 def criarusuario():
+    hash = hashlib.sha512(str(request.form.get('password'))
+                          .encode('utf-8')).hexdigest()
     usuario = Usuario(
         request.form.get('name'),
         request.form.get('email'),
-        request.form.get('password')
+        hash
     )
     db.session.add(usuario)
     db.session.commit()
@@ -105,11 +132,14 @@ def buscarusuario(id):
 # Edit user
 @app.route('/usuario/editar/<int:id>', methods=['GET', 'POST'])
 def editarusuario(id):
+    hash = hashlib.sha512(str(request.form.get('password'))
+                          .encode('utf-8')).hexdigest()
+
     usuario = Usuario.query.get(id)
     if request.method == 'POST':
         usuario.nome = request.form.get('name')
         usuario.email = request.form.get('email')
-        usuario.senha = request.form.get('password')
+        usuario.senha = hash
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('editarusuario.html', usuario=usuario, title='Editar')
@@ -124,10 +154,33 @@ def deletarusuario(id):
     return redirect(url_for('index'))
 
 
+@login_manager.user_loader
+def load_user(id):
+    return Usuario.query.get(id)
+
+
 # Sign in page
-@app.route('/signin')
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    return render_template('signin.html', title='Entrar')
+    hash = hashlib.sha512(str(request.form.get('password'))
+                          .encode('utf-8')).hexdigest()
+
+    if request.method == 'POST':
+        usuario = Usuario.query.filter_by(
+            email=request.form.get('email')).first()
+        if usuario and usuario.senha == hash:
+            login_user(usuario)
+            return redirect(request.args.get('next') or url_for('index'))
+        else:
+            return redirect(url_for('signin'))
+    return render_template('signin.html', title='Login')
+
+
+# Logout
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 # Categories page
