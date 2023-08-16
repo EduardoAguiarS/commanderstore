@@ -98,17 +98,21 @@ def send_css(path):
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html', usuarios=Usuario.query.all())
+    # Query last 5 anuncios
+    anuncios = Anuncio.query.order_by(Anuncio.id.desc()).limit(5).all()
+    return render_template('index.html', usuarios=Usuario.query.all(), anuncios=anuncios, title='Home')
 
 
 # Sign up page
 @app.route('/signup')
+@login_required
 def signup():
     return render_template('signup.html', title='Cadastro')
 
 
 # New user
 @app.route('/usuario/criar', methods=['POST'])
+@login_required
 def criarusuario():
     hash = hashlib.sha512(str(request.form.get('password'))
                           .encode('utf-8')).hexdigest()
@@ -124,6 +128,7 @@ def criarusuario():
 
 # User details
 @app.route('/usuario/detalhes/<int:id>')
+@login_required
 def buscarusuario(id):
     usuario = Usuario.query.get(id)
     return usuario.nome
@@ -131,6 +136,7 @@ def buscarusuario(id):
 
 # Edit user
 @app.route('/usuario/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editarusuario(id):
     hash = hashlib.sha512(str(request.form.get('password'))
                           .encode('utf-8')).hexdigest()
@@ -147,6 +153,7 @@ def editarusuario(id):
 
 # Delete user
 @app.route('/usuario/deletar/<int:id>')
+@login_required
 def deletarusuario(id):
     usuario = Usuario.query.get(id)
     db.session.delete(usuario)
@@ -178,6 +185,7 @@ def signin():
 
 # Logout
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -185,12 +193,14 @@ def logout():
 
 # Categories page
 @app.route('/config/categorias')
+@login_required
 def categorias():
     return render_template('categorias.html', title='Categorias', categorias=Categoria.query.all())
 
 
 # New category
 @app.route('/categorias/criar', methods=['POST'])
+@login_required
 def categorias_novo():
     categoria = Categoria(
         request.form.get('name'),
@@ -203,6 +213,7 @@ def categorias_novo():
 
 # Edit category
 @app.route('/categorias/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editarcategoria(id):
     categoria = Categoria.query.get(id)
     if request.method == 'POST':
@@ -215,6 +226,7 @@ def editarcategoria(id):
 
 # Delete category
 @app.route('/categorias/deletar/<int:id>')
+@login_required
 def deletarcategoria(id):
     categoria = Categoria.query.get(id)
     db.session.delete(categoria)
@@ -224,6 +236,7 @@ def deletarcategoria(id):
 
 # Products page
 @app.route('/anuncios')
+@login_required
 def anuncios():
     return render_template(
         'anuncios.html',
@@ -235,6 +248,7 @@ def anuncios():
 
 # New product
 @app.route('/anuncios/criar', methods=['POST'])
+@login_required
 def anuncios_novo():
     anuncio = Anuncio(
         request.form.get('name'),
@@ -250,6 +264,7 @@ def anuncios_novo():
 
 # Ver produto
 @app.route('/anuncios/detalhes/<int:id>')
+@login_required
 def anuncio_detalhes(id):
     anuncio = Anuncio.query.get(id)
     return anuncio.nome
@@ -257,6 +272,7 @@ def anuncio_detalhes(id):
 
 # Edit product
 @app.route('/anuncios/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editaranuncio(id):
     anuncio = Anuncio.query.get(id)
     if request.method == 'POST':
@@ -271,6 +287,7 @@ def editaranuncio(id):
 
 # Delete product
 @app.route('/anuncios/deletar/<int:id>')
+@login_required
 def deletaranuncio(id):
     anuncio = Anuncio.query.get(id)
     db.session.delete(anuncio)
@@ -279,11 +296,13 @@ def deletaranuncio(id):
 
 
 @app.route('/produtos/<id>')
+@login_required
 def produto(id):
     return render_template('produto.html', id=id, title='Produto')
 
 
 @app.route('/favoritos')
+@login_required
 def favoritos():
     return render_template('favoritos.html', title='Favoritos')
 
