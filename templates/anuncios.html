@@ -1,30 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Commander Store - {{ title }}</title>
-  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="../static/img/icon-deck.svg" type="image/x-icon">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/form.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    
+    <title>Commander Store - {{ title }}</title>
 </head>
 <body>
   <header>
-    <nav class="menu">
-        <div class="menu__container">
-            <div class="menu__logo">
-                <a href={{url_for('index')}}><img src="{{url_for('static', filename='img/logo.png')}}" alt="Commander Store"></a>
-            </div>
-            <ul class="menu__list">
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('index')}}>Home</a></li>
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('anuncios')}}>Anuncios</a></li>
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signup')}}>Cadastro</a></li>
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('signin')}}>Login</a></li>
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('favoritos')}}>Favoritos</a></li>
-              <li class="menu__list-item"><a class="menu__list-link" href={{url_for('categorias')}}>Categorias</a></li>
-          </ul>
-        </div>
+      <nav class="navbar navbar-expand-lg navbar-light mb-3">
+          <div class="menu__container container-fluid shadow-sm">
+              <div class="menu__logo">
+                  <a href={{url_for('index')}}><img src="../static/img/icon-deck.svg" alt="Commander Store" class="w-50"></a>
+              </div>
+              <div>
+                  <ul class="menu__list navbar-nav mr-auto">
+                      <li class="menu__list-item nav-item active"><a class="menu__list-link nav-link" href={{url_for('index')}}>Home</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('anuncios')}}>Anuncios</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('signup')}}>Cadastro</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('signin')}}>Login</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('favoritos')}}>Favoritos</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('categorias')}}>Categorias</a></li>
+                      <li class="menu__list-item nav-item"><a class="menu__list-link nav-link" href={{url_for('logout')}}>Logout</a></li>
+                  </ul>
+              </div>
+          </div>
       </nav>
   </header>
+
   <h4 class="title">{{ title }}</h4>
   <form action="/anuncios/criar" method="post" class="form">
     <label for="name">Nome</label>
