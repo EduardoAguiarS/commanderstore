@@ -130,3 +130,29 @@ input[type="number"]::-webkit-outer-spin-button {
 .menu__list-link:hover {
   color: #ff6b6c;
 }
+
+@media (max-width: 768px) {
+  .menu__container {
+    padding: 0 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .menu__logo img {
+    margin: 0 auto;
+    display: block;
+  }
+}

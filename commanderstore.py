@@ -93,6 +93,12 @@ def send_css(path):
     return send_from_directory('static/css', path)
 
 
+# link to js bootstrap
+@app.route('/static/js/<path:path>')
+def send_js(path):
+    return send_from_directory('static/js', path)
+
+
 # Routes
 # Home page
 @app.route('/')
