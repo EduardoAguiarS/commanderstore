@@ -1,10 +1,9 @@
+import hashlib
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (current_user, LoginManager,
                          login_user, logout_user,
                          login_required)
-import hashlib
-
 
 # Configurations
 app = Flask(__name__)
@@ -309,6 +308,6 @@ def favoritos():
 
 
 # Run app
-if __name__ == 'COMMANDERSTORE':
+if __name__ == 'commanderstore':
     print("Rodando...")
     db.create_all()
