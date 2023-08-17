@@ -102,7 +102,6 @@ def send_js(path):
 # Routes
 # Home page
 @app.route('/')
-@login_required
 def index():
     # Query last 5 anuncios
     anuncios = Anuncio.query.order_by(Anuncio.id.desc()).limit(5).all()
@@ -111,14 +110,12 @@ def index():
 
 # Sign up page
 @app.route('/signup')
-@login_required
 def signup():
     return render_template('signup.html', title='Cadastro')
 
 
 # New user
 @app.route('/usuario/criar', methods=['POST'])
-@login_required
 def criarusuario():
     hash = hashlib.sha512(str(request.form.get('password'))
                           .encode('utf-8')).hexdigest()
@@ -134,7 +131,6 @@ def criarusuario():
 
 # User details
 @app.route('/usuario/detalhes/<int:id>')
-@login_required
 def buscarusuario(id):
     usuario = Usuario.query.get(id)
     return usuario.nome
@@ -270,7 +266,6 @@ def anuncios_novo():
 
 # Ver produto
 @app.route('/anuncios/detalhes/<int:id>')
-@login_required
 def anuncio_detalhes(id):
     anuncio = Anuncio.query.get(id)
     return anuncio.nome
@@ -314,6 +309,6 @@ def favoritos():
 
 
 # Run app
-if __name__ == 'commanderstore':
+if __name__ == 'COMMANDERSTORE':
     print("Rodando...")
     db.create_all()
