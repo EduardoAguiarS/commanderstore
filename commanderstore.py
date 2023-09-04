@@ -251,12 +251,13 @@ def anuncios():
 @app.route('/anuncios/criar', methods=['POST'])
 @login_required
 def anuncios_novo():
+    usr_id = current_user.get_id()
     anuncio = Anuncio(
         request.form.get('name'),
         request.form.get('desc'),
         request.form.get('preco'),
         request.form.get('cat'),
-        request.form.get('usr')
+        usr_id
     )
     db.session.add(anuncio)
     db.session.commit()
