@@ -47,16 +47,30 @@
   </form>
 
   <div class="container">
-    <h4 class="title">Categorias Cadastradas</h4>
-    <ul>
-      {% for categoria in categorias %}
-        <li>
-          {{ categoria.nome }} - {{ categoria.desc }}
-          <a href="{{ url_for('editarcategoria', id=categoria.id) }}">Editar</a>
-          <a href="{{ url_for('deletarcategoria', id=categoria.id) }}">Excluir</a>
-        </li>
-      {% endfor %}
-    </ul>
+    <h3 class="title">Categorias Cadastradas</h3>
+    <div class="table-responsive mb-4">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for categoria in categorias %}
+            <tr>
+              <td cope="row">{{ categoria.nome }}</td>
+              <td>{{ categoria.desc }}</td>
+              <td>
+                <a href="{{ url_for('editarcategoria', id=categoria.id) }}">Editar</a>
+                <a href="{{ url_for('deletarcategoria', id=categoria.id) }}">Excluir</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>

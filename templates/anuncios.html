@@ -59,29 +59,33 @@
     <input class="form__submit" type="submit" value="Cadastrar">
   </form>
 
-  <h4 class="title">Lista de Produtos</h4>
-  <table>
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Desc</th>
-            <th>Preco</th>
-            <th>Categoria</th>
-        </tr>
-    </thead>
-    <tbody>
-      {% for anuncio in anuncios %}
-        <tr>
-            <td>{{ anuncio.nome }}</td>
-            <td>{{ anuncio.desc }}</td>
-            <td>{{ anuncio.preco }}</td>
-            <td>{{ anuncio.cat_id }}</td>
-            <td><a href="{{ url_for('anuncio_detalhes', id=anuncio.id) }}">Ver</a></td>
-            <td><a href="{{ url_for('editaranuncio', id=anuncio.id) }}">Editar</a></td>
-            <td><a href="{{ url_for('deletaranuncio', id=anuncio.id) }}">Deletar</a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <section class="container">
+    <h3 class="title">Lista de Produtos</h3>
+    <div class="table-responsive mb-4">
+      <table class="table table-striped table-bordered">
+        <thead class="thread-default">
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Desc</th>
+                <th scope="col">Preco</th>
+                <th scope="col">Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for anuncio in anuncios %}
+            <tr>
+                <td scope="row">{{ anuncio.nome }}</td>
+                <td>{{ anuncio.desc }}</td>
+                <td>{{ anuncio.preco }}</td>
+                <td>{{ anuncio.cat_id }}</td>
+                <td><a href="{{ url_for('anuncio_detalhes', id=anuncio.id) }}">Ver</a></td>
+                <td><a href="{{ url_for('editaranuncio', id=anuncio.id) }}">Editar</a></td>
+                <td><a href="{{ url_for('deletaranuncio', id=anuncio.id) }}">Deletar</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
 </body>
 </html>
